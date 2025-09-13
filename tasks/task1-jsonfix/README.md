@@ -121,10 +121,10 @@ config:
   theme: mc
 ---
 flowchart LR
-    U["JSON Object { }"] --> id["id: 1  (number)"] & name["name: Leanne Graham  (string)"] & username["username: Bret  (string)"] & email["email: Sincere@april.biz  (string)"] & phone["phone: 1-770-736-8031 x56442  (string)"] & website["website: hildegard.org  (string)"] & address["address: { ... }  (object)"] & company["company: { ... }  (object)"]
-    address --> street["street: Kulas Light  (string)"] & suite["suite: Apt. 556  (string)"] & city["city: Gwenborough  (string)"] & zipcode["zipcode: 92998-3874  (string)"] & geo["geo: { ... }  (object)"]
-    geo --> lat["lat: -37.3159  (string)"] & lng["lng: 81.1496  (string)"]
-    company --> cname["name: Romaguera-Crona  (string)"] & catch["catchPhrase: Multi-layered client-server neural-net  (string)"] & bs["bs: harness real-time e-markets  (string)"]
+    U["JSON Object { }"] --> id["id"] & name["name"] & username["username] & email["email] & phone["phone"] & website["website"] & address["address: { ... }  (object)"] & company["company: { ... }  (object)"]
+    address --> street["street] & suite["suite"] & city["city"] & zipcode["zipcode"] & geo["geo: { ... }  (object)"]
+    geo --> lat["lat"] & lng["lng"]
+    company --> cname["name: Romaguera-Crona  (string)"] & catch["catchPhrase"] & bs["bs"]
 ```
 
 The order of members has no semantic meaning; you retrieve information by key, as with a dictionary or hash map. Keys should be unique because the standard does not define behavior for duplicates, and trailing commas after the final member are not permitted.
