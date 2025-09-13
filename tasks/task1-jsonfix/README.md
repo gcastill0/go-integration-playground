@@ -84,7 +84,30 @@ There are two the minimal fixes:
 
 With JSON, there two primary composite components: objects and arrays.
 
-### Object
+### Arrays
+
+An array is an ordered sequence of values. It is delimited by a left bracket “[[]” and a right bracket “[]”. Elements are separated by commas, and each element may be any JSON value, including strings, numbers, booleans, null, objects, or other arrays. Order is semantically meaningful: consumers interpret elements by their position in the sequence. 
+
+In this exercise, the data structure encloses all objects in a single array as follows:
+
+```mermaid
+---
+config:
+  look: neo
+  layout: elk
+  theme: mc
+---
+flowchart LR
+    A["JSON Array [ ]"] --> I0["[0]"] & I1["[1]"] & I2["[2]"]
+    I0 --> O0["Object { }"]
+    I1 --> O1["Object { }"]
+    I2 --> O2["Object { }"]
+
+```
+
+While JSON does not define indices, most programming languages expose arrays with zero-based indexing, so the first element is at index 0, the second at index 1, and so on. Arrays may be empty. Trailing commas are not permitted, and JSON does not support “holes”; every position must contain a value, so an absent value must be represented explicitly, for example with null.
+
+### Objects
 
 An object is an unordered mapping from string keys to values. It is written between a left curly brace “{” and a right curly brace “}”. Each member consists of a double-quoted key, a colon, and a value, and members are separated by commas. Values may be any JSON value (string, number, boolean, null, array, or another object).
 
@@ -107,8 +130,3 @@ flowchart LR
 The order of members has no semantic meaning; you retrieve information by key, as with a dictionary or hash map. Keys should be unique because the standard does not define behavior for duplicates, and trailing commas after the final member are not permitted.
 
 
-### Array
-
-An array is an ordered sequence of values. It is delimited by a left bracket “[[]” and a right bracket “[]”. Elements are separated by commas, and each element may be any JSON value, including strings, numbers, booleans, null, objects, or other arrays. Order is semantically meaningful: consumers interpret elements by their position in the sequence. 
-
-While JSON does not define indices, most programming languages expose arrays with zero-based indexing, so the first element is at index 0, the second at index 1, and so on. Arrays may be empty. Trailing commas are not permitted, and JSON does not support “holes”; every position must contain a value, so an absent value must be represented explicitly, for example with null.
