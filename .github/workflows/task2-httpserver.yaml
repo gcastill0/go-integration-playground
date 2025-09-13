@@ -1,0 +1,50 @@
+name: Test (Task 2 HTTP server)
+
+on:
+  push:
+    paths:
+      - 'go.mod'
+      - 'go.sum'
+      - 'tasks/task2-httpserver/**'
+      - 'tests/**'
+  pull_request:
+    paths:
+      - 'go.mod'
+      - 'go.sum'
+      - 'tasks/task2-httpserver/**'
+      - 'tests/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        with: 
+          token: ${{ secrets.MAVERICS }}
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.25.x'
+          cache: true
+
+      - name: Go env
+        run: |
+          go version
+          go env GOPATH GOMOD GOMODCACHE
+
+      - name: Download modules
+        run: go mod download
+
+      - name: Build packages
+        run: go build ./...
+
+      - name: Bash test for Task 2 (index route)
+        run: |
+          chmod +x tests/task2_httpserver_01.bash
+          ./tests/task2_httpserver_01.bash
