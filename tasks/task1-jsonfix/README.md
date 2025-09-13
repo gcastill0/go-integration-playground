@@ -31,7 +31,6 @@ The document present an array of three objects with two syntax errors in the doc
     22            "bs": "harness real-time e-markets"
     23        }
     24    },
-        ...
     ```
 
 <br>
@@ -43,7 +42,6 @@ The document present an array of three objects with two syntax errors in the doc
     The following snippet shows the last object in the dictionrary from original file - [See lines 48–71 of jdoc_original.json](https://github.com/gcastill0/go-integration-playground/blob/main/tasks/task1-jsonfix/jdoc_original.json#L48-L71). Note specifically that the array is missing the closing bracker (']') which should be located in line 71.
 
     ```json
-        ...
     48    {
     49    "id": 3,
     50   "name": "Clementine Bauch",
@@ -86,6 +84,31 @@ There are two the minimal fixes:
 
 With JSON, there two primary composite components: objects and arrays.
 
-An **object** is an unordered collection of key–value pairs. The grammar requires that an object begin with a left brace, or handlebar, and end with a right brace, and that each member be a string key followed by a colon and then a value, with members separated by commas. Keys must be double-quoted strings; bare identifiers are not allowed. Semantically, an object corresponds to a dictionary or hash map from string to value, so lookups are by key, and the textual order of members carries no meaning in the data model.
+### Object
 
-An **array** is an ordered sequence of values. The grammar requires that an array begin with a left bracket and end with a right bracket, and that commas separate elements. Unlike objects, order in an array is semantically significant and corresponds to positional indices starting at zero, as expected from a dynamic array or vector. Arrays may be empty, may hold heterogeneous values, and may contain nested arrays or objects.
+An object is an unordered mapping from string keys to values. It is written between a left curly brace “{” and a right curly brace “}”. Each member consists of a double-quoted key, a colon, and a value, and members are separated by commas. Values may be any JSON value (string, number, boolean, null, array, or another object).
+
+To illustrate, the following is a representation of the object structure from the origianl JSON document.
+
+```mermaid
+---
+config:
+  look: neo
+  layout: elk
+  theme: mc
+---
+flowchart LR
+    U["JSON Object { }"] --> id["id: 1  (number)"] & name["name: Leanne Graham  (string)"] & username["username: Bret  (string)"] & email["email: Sincere@april.biz  (string)"] & phone["phone: 1-770-736-8031 x56442  (string)"] & website["website: hildegard.org  (string)"] & address["address: { ... }  (object)"] & company["company: { ... }  (object)"]
+    address --> street["street: Kulas Light  (string)"] & suite["suite: Apt. 556  (string)"] & city["city: Gwenborough  (string)"] & zipcode["zipcode: 92998-3874  (string)"] & geo["geo: { ... }  (object)"]
+    geo --> lat["lat: -37.3159  (string)"] & lng["lng: 81.1496  (string)"]
+    company --> cname["name: Romaguera-Crona  (string)"] & catch["catchPhrase: Multi-layered client-server neural-net  (string)"] & bs["bs: harness real-time e-markets  (string)"]
+```
+
+The order of members has no semantic meaning; you retrieve information by key, as with a dictionary or hash map. Keys should be unique because the standard does not define behavior for duplicates, and trailing commas after the final member are not permitted.
+
+
+### Array
+
+An array is an ordered sequence of values. It is delimited by a left bracket “[[]” and a right bracket “[]”. Elements are separated by commas, and each element may be any JSON value, including strings, numbers, booleans, null, objects, or other arrays. Order is semantically meaningful: consumers interpret elements by their position in the sequence. 
+
+While JSON does not define indices, most programming languages expose arrays with zero-based indexing, so the first element is at index 0, the second at index 1, and so on. Arrays may be empty. Trailing commas are not permitted, and JSON does not support “holes”; every position must contain a value, so an absent value must be represented explicitly, for example with null.
