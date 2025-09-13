@@ -1,0 +1,19 @@
+on:
+  push:
+    paths: ['tasks/task1-jsonfix/data/**/*.json']
+  pull_request:
+    paths: ['tasks/task1-jsonfix/data/**/*.json']
+
+jobs:
+  lint-json:
+    permissions: { contents: read, statuses: write }
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: super-linter/super-linter@v8
+        env:
+          GITHUB_TOKEN: ${{ secrets.MAVERICS }}
+          VALIDATE_JSON: "true"
+          VALIDATE_ALL_CODEBASE: "true"  # lint all matching files every run
+          FILTER_REGEX_INCLUDE: "^tasks/task1-jsonfix/data/.*\\.json$"
+          ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: "true"
