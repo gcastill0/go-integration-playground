@@ -44,17 +44,68 @@ jobs:
       - name: Build packages
         run: go build ./...
 
-      - name: Bash test for Task 2 (index route)
+      - id: base
+        name: Bash test for Task 2 (index route)
         run: |
           chmod +x tests/task2_httpserver_base.bash
-          ./tests/task2_httpserver_base.bash
+          ./tests/task2_httpserver_base.bash > base.log 2>&1
+          cat base.log
 
-      - name: Bash test for Task 2 (ping route)
+      - id: ping
+        name: Bash test for Task 2 (ping route)
         run: |
           chmod +x tests/task2_httpserver_base.bash
-          ./tests/task2_httpserver_ping.bash
+          ./tests/task2_httpserver_ping.bash > ping.log 2>&1
+          cat ping.log
 
-      - name: Bash test for Task 2 (echo route)
+      - id: echo
+        name: Bash test for Task 2 (echo route)
         run: |
           chmod +x tests/task2_httpserver_base.bash
-          ./tests/task2_httpserver_echo.bash
+          ./tests/task2_httpserver_echo.bash > echo.log 2>&1
+          cat echo.log
+
+      # ----- Summary (always runs, even if a test failed) ------------------
+
+      - name: Write job summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "## Task 2 HTTP Server — Test Summary"
+            echo
+            echo "| Test | Result |"
+            echo "|------|--------|"
+            echo "| Base \`/\` | **${{ steps.base.outputs.status || 'skipped' }}** |"
+            echo "| GET /ping | **${{ steps.ping.outputs.status || 'skipped' }}** |"
+            echo "| POST /echo | **${{ steps.echo.outputs.status || 'skipped' }}** |"
+            echo
+            if [[ -f base.log && "${{ steps.index.outputs.status || 'skipped' }}" == "fail" ]]; then
+              echo "<details><summary>Index logs</summary>"
+              echo
+              echo '```text'
+              sed -n '1,200p' base.log || true
+              echo '```'
+              echo "</details>"
+              echo
+            fi
+            if [[ -f ping.log && "${{ steps.ping.outputs.status || 'skipped' }}" == "fail" ]]; then
+              echo "<details><summary>Ping logs</summary>"
+              echo
+              echo '```text'
+              sed -n '1,200p' ping.log || true
+              echo '```'
+              echo "</details>"
+              echo
+            fi
+            if [[ -f echo.log && "${{ steps.echo.outputs.status || 'skipped' }}" == "fail" ]]; then
+              echo "<details><summary>Echo logs</summary>"
+              echo
+              echo '```text'
+              sed -n '1,200p' echo.log || true
+              echo '```'
+              echo "</details>"
+              echo
+            fi
+            echo "> Repo: $GITHUB_REPOSITORY • Run: $GITHUB_RUN_ID • Commit: \`$GITHUB_SHA\`"
+          } >> "$GITHUB_STEP_SUMMARY"
