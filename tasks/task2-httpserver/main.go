@@ -23,5 +23,16 @@ func main() {
 		// minimal index response
 		fmt.Fprintln(w, "Hello, world")
 	})
+
+	// /ping: JSON pong
+	http.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.Write([]byte(`{"message":"pong"}`))
+	})
+
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
