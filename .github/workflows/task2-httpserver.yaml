@@ -46,5 +46,15 @@ jobs:
 
       - name: Bash test for Task 2 (index route)
         run: |
-          chmod +x tests/task2_httpserver_01.bash
-          ./tests/task2_httpserver_01.bash
+          chmod +x tests/task2_httpserver_base.bash
+          ./tests/task2_httpserver_base.bash
+
+      - name: Bash test for Task 2 (ping route)
+        run: |
+          chmod +x tests/task2_httpserver_base.bash
+          ./tests/task2_httpserver_ping.bash
+
+      - name: Bash test for Task 2 (echo route)
+        run: |
+          chmod +x tests/task2_httpserver_base.bash
+          ./tests/task2_httpserver_echo.bash

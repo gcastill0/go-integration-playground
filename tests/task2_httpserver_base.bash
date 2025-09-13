@@ -20,8 +20,8 @@ for _ in {1..30}; do
 done
 
 # fetch body and status
-BODY="$(curl -sS "http://127.0.0.1:${PORT}/")"
-STATUS="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:${PORT}/")"
+BODY="$(curl -sS -X POST "http://127.0.0.1:${PORT}/")"
+STATUS="$(curl -sS -o -X POST /dev/null -w '%{http_code}' "http://127.0.0.1:${PORT}/")"
 
 # assertions
 [ "${STATUS}" = "200" ] || { echo "expected 200, got ${STATUS}"; exit 1; }
