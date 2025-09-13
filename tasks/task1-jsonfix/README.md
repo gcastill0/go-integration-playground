@@ -37,8 +37,6 @@ The document present an array of three objects with two syntax errors in the doc
 
 * The data structure never closes the array with a `]` symbol after the third object; the file moves on to the final `}`.
 
-    The snippet shown below shows the first object in the original file - [See lines 1–24 of jdoc_original.json](https://github.com/gcastill0/go-integration-playground/blob/main/tasks/task1-jsonfix/jdoc_original.json#L1-24). Note specifically that the first object is missing the opening handlebar ('{') which should be located in line 2.
-
     The following snippet shows the last object in the dictionrary from original file - [See lines 48–71 of jdoc_original.json](https://github.com/gcastill0/go-integration-playground/blob/main/tasks/task1-jsonfix/jdoc_original.json#L48-L71). Note specifically that the array is missing the closing bracker (']') which should be located in line 71.
 
     ```json
