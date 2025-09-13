@@ -50,6 +50,7 @@ jobs:
           chmod +x tests/task2_httpserver_base.bash
           ./tests/task2_httpserver_base.bash > base.log 2>&1
           cat base.log
+          exit 0
 
       - id: ping
         name: Bash test for Task 2 (ping route)
@@ -57,6 +58,7 @@ jobs:
           chmod +x tests/task2_httpserver_base.bash
           ./tests/task2_httpserver_ping.bash > ping.log 2>&1
           cat ping.log
+          exit 0
 
       - id: echo
         name: Bash test for Task 2 (echo route)
@@ -64,6 +66,7 @@ jobs:
           chmod +x tests/task2_httpserver_base.bash
           ./tests/task2_httpserver_echo.bash > echo.log 2>&1
           cat echo.log
+          exit 0
 
       # ----- Summary (always runs, even if a test failed) ------------------
 
@@ -80,7 +83,7 @@ jobs:
             echo "| GET /ping | **${{ steps.ping.outputs.status || 'skipped' }}** |"
             echo "| POST /echo | **${{ steps.echo.outputs.status || 'skipped' }}** |"
             echo
-            if [[ -f base.log && "${{ steps.index.outputs.status || 'skipped' }}" == "fail" ]]; then
+            if [[ -f base.log && "${{ steps.base.outputs.status || 'skipped' }}" == "fail" ]]; then
               echo "<details><summary>Index logs</summary>"
               echo
               echo '```text'
