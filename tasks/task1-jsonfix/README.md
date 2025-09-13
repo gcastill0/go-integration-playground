@@ -121,10 +121,10 @@ config:
   theme: mc
 ---
 flowchart LR
-    U["JSON Object { }"] --> id["id"] & name["name"] & username["username] & email["email] & phone["phone"] & website["website"] & address["address: { ... }  (object)"] & company["company: { ... }  (object)"]
-    address --> street["street] & suite["suite"] & city["city"] & zipcode["zipcode"] & geo["geo: { ... }  (object)"]
+    U["JSON Object { }"] --> id["id"] & name["name"] & username["username"] & email["email"] & phone["phone"] & website["website"] & address["address: { ... }  (object)"] & company["company: { ... }  (object)"]
+    address --> street["street"] & suite["suite"] & city["city"] & zipcode["zipcode"] & geo["geo: { ... }  (object)"]
     geo --> lat["lat"] & lng["lng"]
-    company --> cname["name: Romaguera-Crona  (string)"] & catch["catchPhrase"] & bs["bs"]
+    company --> cname["name"] & catch["catchPhrase"] & bs["bs"]
 ```
 
 The order of members has no semantic meaning; you retrieve information by key, as with a dictionary or hash map. Keys should be unique because the standard does not define behavior for duplicates, and trailing commas after the final member are not permitted.
