@@ -2,10 +2,19 @@
 
 The goal of this task is to treat a malformed JSON document, explain errors in terms of the JSON grammar, and produce a corrected, well-formed version. We take a layered, testable approach: first validate syntax, then show evidence.
 
+You can navigate through this article through this menu:
+
 1. [Validation](#validation)
 2. [Exercise Details](#exercise-details)
 3. [JSON Grammar](#json-grammar)
 4. [Why it matters](#why-it-matters)
+5. [Conclusion](#conclusion)
+
+Quick estimates for reading:
+
+  * Fast skim: ~4-6 minutes.
+  * Typical technical read: ~8–10 minutes.
+  * Careful read: ~10–15 minutes.
 
 ## Validation
 
