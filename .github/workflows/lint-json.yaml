@@ -1,19 +1,29 @@
+name: Lint JSON (task1-jsonfix)
+
 on:
   push:
-    paths: ['tasks/task1-jsonfix/data/**/*.json']
+    paths:
+      - 'tasks/task1-jsonfix/data/**/*.json'
   pull_request:
-    paths: ['tasks/task1-jsonfix/data/**/*.json']
+    paths:
+      - 'tasks/task1-jsonfix/data/**/*.json'
 
 jobs:
   lint-json:
     permissions: { contents: read, statuses: write }
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: super-linter/super-linter@v8
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Super-Linter (JSON only, scoped to folder)
+        uses: super-linter/super-linter@v8
         env:
           GITHUB_TOKEN: ${{ secrets.MAVERICS }}
+          LOG_LEVEL: "DEBUG"                  # show what files are picked up
           VALIDATE_JSON: "true"
+          VALIDATE_PRETTIER: "true"
+          VALIDATE_BIOME: "true"
           VALIDATE_ALL_CODEBASE: "true"  # lint all matching files every run
-          FILTER_REGEX_INCLUDE: "^tasks/task1-jsonfix/data/.*\\.json$"
+          FILTER_REGEX_INCLUDE: "tasks/task1-jsonfix/data/.*\\.json$"
           ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: "true"
