@@ -30,4 +30,5 @@ if [ "${BODY}" != "Hello, world" ] && [ "${BODY}" != $'Hello, world\n' ]; then
   exit 1
 fi
 
+echo
 echo "OK: / returned 200 and expected body"

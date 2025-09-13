@@ -15,7 +15,7 @@ sleep 5
 
 # tiny readiness wait
 for _ in {1..30}; do
-  curl -vvsSf "http://127.0.0.1:${PORT}" >/dev/null && break
+  curl -vvsSf -X POST "http://127.0.0.1:${PORT}/echo" -H 'Content-Type: application/json' -d '{"name":"test"}' >/dev/null && break
   sleep 1
 done
 
@@ -30,4 +30,4 @@ if [ "${BODY}" != '{"name":"test"}' ]; then
   exit 1
 fi
 
-echo "OK: /echo returned 200 and response ${BODY} "
+echo "OK: /echo returned 200 and response ${BODY}"

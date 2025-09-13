@@ -30,4 +30,5 @@ if [ "${BODY}" != '{"message":"pong"}' ]; then
   exit 1
 fi
 
-echo "OK: /ping returned 200 and ${BODY} response"
+echo
+echo "OK: /ping returned 200 and response ${BODY}"
