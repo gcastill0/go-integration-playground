@@ -51,7 +51,8 @@ jobs:
           chmod +x tests/task2_httpserver_base.bash
           ./tests/task2_httpserver_base.bash > base.log 2>&1
           cat base.log
-          exit 0
+          OUTPUT=$(cat base.log)
+          echo "::set-output name=OUTPUT2::${OUTPUT}"
 
       - id: ping
         name: Bash test for Task 2 (ping route)
@@ -60,7 +61,8 @@ jobs:
           chmod +x tests/task2_httpserver_base.bash
           ./tests/task2_httpserver_ping.bash > ping.log 2>&1
           cat ping.log
-          exit 0
+          OUTPUT=$(cat ping.log)
+          echo "::set-output name=OUTPUT2::${OUTPUT}"
 
       - id: echo
         name: Bash test for Task 2 (echo route)
@@ -69,7 +71,8 @@ jobs:
           chmod +x tests/task2_httpserver_base.bash
           ./tests/task2_httpserver_echo.bash > echo.log 2>&1
           cat echo.log
-          exit 0
+          OUTPUT=$(cat echo.log)
+          echo "::set-output name=OUTPUT2::${OUTPUT}"
 
       # ----- Summary (always runs, even if a test failed) ------------------
 
@@ -82,11 +85,11 @@ jobs:
             echo
             echo "| Test | Result |"
             echo "|------|--------|"
-            echo "| Base \`/\` | **${{ steps.base.outputs.status || 'skipped' }}** |"
-            echo "| GET /ping | **${{ steps.ping.outputs.status || 'skipped' }}** |"
-            echo "| POST /echo | **${{ steps.echo.outputs.status || 'skipped' }}** |"
+            echo "| Base \`/\` | **${{ steps.base.outputs.OUTPUT1 || 'skipped' }}** |"
+            echo "| GET /ping | **${{ steps.ping.outputs.OUTPUT2 || 'skipped' }}** |"
+            echo "| POST /echo | **${{ steps.echo.outputs.OUTPUT3 || 'skipped' }}** |"
             echo
-            if [[ -f base.log && "${{ steps.base.outputs.status || 'skipped' }}" == "fail" ]]; then
+            if [[ -f base.log && "${{ steps.base.outputs.OUTPUT1 || 'skipped' }}" == "fail" ]]; then
               echo "<details><summary>Index logs</summary>"
               echo
               echo '```text'
@@ -95,7 +98,7 @@ jobs:
               echo "</details>"
               echo
             fi
-            if [[ -f ping.log && "${{ steps.ping.outputs.status || 'skipped' }}" == "fail" ]]; then
+            if [[ -f ping.log && "${{ steps.ping.outputs.OUTPUT2 || 'skipped' }}" == "fail" ]]; then
               echo "<details><summary>Ping logs</summary>"
               echo
               echo '```text'
@@ -104,7 +107,7 @@ jobs:
               echo "</details>"
               echo
             fi
-            if [[ -f echo.log && "${{ steps.echo.outputs.status || 'skipped' }}" == "fail" ]]; then
+            if [[ -f echo.log && "${{ steps.echo.outputs.OUTPUT3 || 'skipped' }}" == "fail" ]]; then
               echo "<details><summary>Echo logs</summary>"
               echo
               echo '```text'
