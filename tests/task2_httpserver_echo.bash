@@ -30,4 +30,5 @@ if [ "${BODY}" != '{"name":"test"}' ]; then
   exit 1
 fi
 
+echo
 echo "OK: /echo returned 200 and response ${BODY}"

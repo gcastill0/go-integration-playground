@@ -15,7 +15,7 @@ sleep 5
 
 # tiny readiness wait
 for _ in {1..30}; do
-  curl -vvsSf "http://127.0.0.1:${PORT}/" >/dev/null && break
+  curl -vvsSf "http://127.0.0.1:${PORT}/ping" >/dev/null && break
   sleep 1
 done
 
