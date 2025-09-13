@@ -20,7 +20,6 @@ jobs:
         uses: super-linter/super-linter@v8
         env:
           GITHUB_TOKEN: ${{ secrets.MAVERICS }}
-          LOG_LEVEL: "DEBUG"                  # show what files are picked up
           VALIDATE_JSON: "true"
           VALIDATE_PRETTIER: "true"
           VALIDATE_BIOME: "true"
