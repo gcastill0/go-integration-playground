@@ -22,9 +22,11 @@ Quick estimates for reading:
 
 Syntax checking for well-formed JSON refers to bytes that conform exactly to the JSON grammar so a parser can build a single, unambiguous parse tree. A well-formed document has exactly one top-level value, either an object or array; objects use curly braces with double-quoted string keys and colon-separated values; arrays use brackets with comma-separated elements.
 
-A common approach is to use `Linting` to ensure JSON is well-formed before any deeper checks. The main drawback with this approach is that syntax-validation tools tend to report only the first syntax error it encounters. Thus, a validation effort may require a number of iterations and human oversight.
+A common approach is to use `Linting` to ensure JSON is well-formed before any deeper checks. The main drawback with this approach is that syntax-validation tools tend to report only the first syntax error they encounter. Thus, a validation effort may require a number of iterations and human oversight.
 
 #### Common tools
+
+  In this exercise, we used `jq` as a first resort. It already installed in available testing systems, and it is well understood.
 
   `jq` is a lightweight command-line JSON processor that doubles as a fast, strict syntax checker—perfect for linting. It parses input according to the JSON grammar specification, fails on malformed documents, and can pretty-print or normalize output for review. A simple invocation like `jq -e . data/jdoc_original.json` returns a non-zero exit code and an error message (with line and column) when the JSON isn’t well-formed, making it easy to gate builds on valid syntax.
 
@@ -37,9 +39,9 @@ A common approach is to use `Linting` to ensure JSON is well-formed before any d
 
 For schema or semantic checks, we can combine `jq` with a JSON Schema validator in CI. For instance, in this exercise, we applied GitHub Action for [Super-linter](https://github.com/super-linter/super-linter). This package integrates multiple language linters, including support for JSON, into a unified CI check. It operates on every push and pull request.
 
-In this exercise, Super-linter runs on every push/PR and focuses only on `tasks/task1-jsonfix/data/**/*.json` (via `VALIDATE_JSON` and `FILTER_REGEX_INCLUDE`). It parses those files with its JSON linters, reports line/column errors in the job log, and fails the check if any file is not well-formed—giving you an automatic, visible gate in CI before code review.
+In this exercise, Super-linter runs on every push/PR and focuses only on `tasks/task1-jsonfix/data/**/*.json` (via `VALIDATE_JSON` and `FILTER_REGEX_INCLUDE`). It parses those files with its JSON linters, reports line/column errors in the job log, and fails the check if any file is not well-formed, providing an automatic, visible gate in CI before code review.
 
-These are the results of a typical check:
+These are the results of a the first check:
 
 ```bash
 156  2025-09-13 02:27:22 [INFO]   Linting JSON items...
@@ -55,20 +57,21 @@ These are the results of a typical check:
 <br>
 This is the summary generated at run-time:
 
-  **Super-linter summary**
+```
+ # Super-linter summary
 
   | Language | Validation result |
   | -------- | ----------------- |
   | JSON     | Fail ❌           |
 
 Super-linter detected linting errors
-
+```
 
 ### Structural validation (schema/shape)
 
 Structural validation (schema/shape) checks that a JSON document has the right fields and types. Through a validation policy, we assert a contract for the required properties, allowed types/enums, string patterns, numeric ranges, array lengths, and nested object shapes, and reject payloads that don’t conform. 
 
-The standard approach is to use JSON Schema, which is validated with tools such as AJV, python-jsonschema, or gojsonschema. In strongly typed loaders, we enforce shape by decoding into typed structs and enabling strict options, rejecting unknown fields, and catching mismatches early.
+The standard approach is to validate the JSON Schema with tools such as AJV, python-jsonschema, or gojsonschema. In strongly typed loaders, we enforce shape by decoding into typed structs and enabling strict options, rejecting unknown fields, and catching mismatches early.
 
 This is outside of the scope of this task, but it is relevant for context.
 
@@ -84,7 +87,7 @@ This concept is also is outside of the scope of this task, but it is relevant fo
 
 The document presents an array of three objects with two syntax errors in the document structure. 
 
-* After the data array opening with `[` symbol, the first object is missing a curly brace `{` before the first `"id"` key. 
+* After the data array opening with a left bracket `[` symbol, the first object is missing a curly brace `{` before the first `"id"` key. 
 
     The snippet shown below shows the first object in the original file - [See lines 1–24 of jdoc_original.json](https://github.com/gcastill0/go-integration-playground/blob/main/tasks/task1-jsonfix/data/jdoc_original.json#L1-L24). Note specifically that the first object is missing the opening handlebar ('{') which should be located in line 2.
 
@@ -117,7 +120,7 @@ The document presents an array of three objects with two syntax errors in the do
 
 <br>
 
-* The data structure never closes the array with a `]` symbol after the third object; the file moves on to the closing curly brace `}`.
+* The data structure never closes the array with a right bracket `]` symbol after the third object; the file closes on the last curly brace `}` which belongs to the last object.
 
     The following snippet shows the last object in the dictionrary from original file - [See lines 48–71 of jdoc_original.json](https://github.com/gcastill0/go-integration-playground/blob/main/tasks/task1-jsonfix/data/jdoc_original.json#L48-L71). Note specifically that the array is missing the closing bracker (']') which should be located in line 71.
 
@@ -154,7 +157,7 @@ The document presents an array of three objects with two syntax errors in the do
 
 There are two minimal fixes: 
 
-1. insert a left handle bar `{` on line 2, right after the opening `[`, and 
+1. insert a left handle bar, or left curly brace, `{` on line 2, right after the opening left bracket `[` on line 1, and 
 
 2. add the closing right bracker, `]`, at the end of the array on line 71.
 
@@ -185,7 +188,7 @@ flowchart LR
 
 ```
 
-While JSON does not define indices, most programming languages expose arrays with zero-based indexing, so the first element is at index 0, the second at index 1, and so on. Arrays may be empty. Trailing commas are not permitted, and JSON does not support “holes”; every position must contain a value, so an absent value must be represented explicitly, for example with null.
+While JSON does not define indices, most programming languages interpret arrays with zero-based indexing, so the first element is at index 0, the second at index 1, and so on. Arrays may be empty. Trailing commas are not permitted, and JSON does not support “holes”; every position must contain a value, so an absent value must be represented explicitly, for example with null.
 
 ### Objects
 
@@ -238,5 +241,7 @@ In this task we treated JSON correctness as a small, testable pipeline: parse fi
 <br>
 
 ---
-Code: Apache License © 2025 see [LICENSE](/LICENSE).
+JSON Sample: Original author<br>
+
+Code: Apache License © 2025 G Castillo -see [LICENSE](/LICENSE).<br>
 This README and notes: CC BY 4.0 © 2025 G Castillo.
