@@ -51,8 +51,8 @@ jobs:
           chmod +x tests/task2_httpserver_base.bash
           ./tests/task2_httpserver_base.bash > base.log 2>&1
           cat base.log
-          OUTPUT=$(cat base.log)
-          echo "::set-output name=OUTPUT2::${OUTPUT}"
+          OUTPUT="$(tail -n 1 base.log | sed 's/\r$//')"
+          echo "::set-output name=OUTPUT1::${OUTPUT}"
 
       - id: ping
         name: Bash test for Task 2 (ping route)
@@ -61,7 +61,7 @@ jobs:
           chmod +x tests/task2_httpserver_base.bash
           ./tests/task2_httpserver_ping.bash > ping.log 2>&1
           cat ping.log
-          OUTPUT=$(cat ping.log)
+          OUTPUT="$(tail -n 1 ping.log | sed 's/\r$//')"
           echo "::set-output name=OUTPUT2::${OUTPUT}"
 
       - id: echo
@@ -71,8 +71,8 @@ jobs:
           chmod +x tests/task2_httpserver_base.bash
           ./tests/task2_httpserver_echo.bash > echo.log 2>&1
           cat echo.log
-          OUTPUT=$(cat echo.log)
-          echo "::set-output name=OUTPUT2::${OUTPUT}"
+          OUTPUT="$(tail -n 1 echo.log | sed 's/\r$//')"
+          echo "::set-output name=OUTPUT3::${OUTPUT}"
 
       # ----- Summary (always runs, even if a test failed) ------------------
 
