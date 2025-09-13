@@ -89,32 +89,26 @@ jobs:
             echo "| GET /ping | **${{ steps.ping.outputs.OUTPUT2 || 'skipped' }}** |"
             echo "| POST /echo | **${{ steps.echo.outputs.OUTPUT3 || 'skipped' }}** |"
             echo
-            if [[ -f base.log && "${{ steps.base.outputs.OUTPUT1 || 'skipped' }}" == "fail" ]]; then
-              echo "<details><summary>Index logs</summary>"
-              echo
-              echo '```text'
-              cat base.log || true
-              echo '```'
-              echo "</details>"
-              echo
-            fi
-            if [[ -f ping.log && "${{ steps.ping.outputs.OUTPUT2 || 'skipped' }}" == "fail" ]]; then
-              echo "<details><summary>Ping logs</summary>"
-              echo
-              echo '```text'
-              cat ping.log || true
-              echo '```'
-              echo "</details>"
-              echo
-            fi
-            if [[ -f echo.log && "${{ steps.echo.outputs.OUTPUT3 || 'skipped' }}" == "fail" ]]; then
-              echo "<details><summary>Echo logs</summary>"
-              echo
-              echo '```text'
-              cat echo.log || true
-              echo '```'
-              echo "</details>"
-              echo
-            fi
+            echo "<details><summary>Base HTTP Service</summary>"
+            echo
+            echo '```text'
+            cat base.log || true
+            echo '```'
+            echo "</details>"
+            echo
+            echo "<details><summary>GET /ping</summary>"
+            echo
+            echo '```text'
+            cat ping.log || true
+            echo '```'
+            echo "</details>"
+            echo
+            echo "<details><summary>POST /echo</summary>"
+            echo
+            echo '```text'
+            cat echo.log || true
+            echo '```'
+            echo "</details>"
+            echo
             echo "> Repo: $GITHUB_REPOSITORY • Run: $GITHUB_RUN_ID • Commit: \`$GITHUB_SHA\`"
           } >> "$GITHUB_STEP_SUMMARY"
