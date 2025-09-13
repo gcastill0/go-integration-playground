@@ -46,6 +46,7 @@ jobs:
 
       - id: base
         name: Bash test for Task 2 (index route)
+        shell: bash
         run: |
           chmod +x tests/task2_httpserver_base.bash
           ./tests/task2_httpserver_base.bash > base.log 2>&1
@@ -54,6 +55,7 @@ jobs:
 
       - id: ping
         name: Bash test for Task 2 (ping route)
+        shell: bash
         run: |
           chmod +x tests/task2_httpserver_base.bash
           ./tests/task2_httpserver_ping.bash > ping.log 2>&1
@@ -62,6 +64,7 @@ jobs:
 
       - id: echo
         name: Bash test for Task 2 (echo route)
+        shell: bash
         run: |
           chmod +x tests/task2_httpserver_base.bash
           ./tests/task2_httpserver_echo.bash > echo.log 2>&1
@@ -87,7 +90,7 @@ jobs:
               echo "<details><summary>Index logs</summary>"
               echo
               echo '```text'
-              sed -n '1,200p' base.log || true
+              cat base.log || true
               echo '```'
               echo "</details>"
               echo
@@ -96,7 +99,7 @@ jobs:
               echo "<details><summary>Ping logs</summary>"
               echo
               echo '```text'
-              sed -n '1,200p' ping.log || true
+              cat ping.log || true
               echo '```'
               echo "</details>"
               echo
@@ -105,7 +108,7 @@ jobs:
               echo "<details><summary>Echo logs</summary>"
               echo
               echo '```text'
-              sed -n '1,200p' echo.log || true
+              cat echo.log || true
               echo '```'
               echo "</details>"
               echo
