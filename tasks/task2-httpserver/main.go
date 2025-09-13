@@ -10,8 +10,11 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"net/http"
+
+	utils "github.com/gcastill0/go-integration-playground/tasks/task2-httpserver/utils"
 )
 
 // main starts a simple HTTP server on port 8080.
@@ -32,6 +35,35 @@ func main() {
 		}
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(`{"message":"pong"}`))
+	})
+
+	// /echo: accept JSON and return it unchanged
+	http.HandleFunc("/echo", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPost {
+			http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+			return
+		}
+		defer r.Body.Close()
+		body, err := io.ReadAll(r.Body)
+		if err != nil {
+			http.Error(w, "bad request", http.StatusBadRequest)
+			return
+		}
+
+		// Reject empty/whitespace-only payloads up front
+		if err := utils.RequireNonEmpty(body); err != nil {
+			http.Error(w, "empty body", http.StatusBadRequest)
+			return
+		}
+
+		// Validate Content-Type == application/json here.
+		if err := utils.ValidateJSONBytes(body); err != nil {
+			http.Error(w, "invalid JSON: "+err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(body)
 	})
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
