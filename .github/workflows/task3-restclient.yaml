@@ -92,7 +92,7 @@ jobs:
         shell: bash
         run: |
           {
-            echo "## Task 2 HTTP Server — Test Summary"
+            echo "## Task 3 REST API Client — Test Summary"
             echo
             echo "| Test | Result |"
             echo "|------|--------|"
