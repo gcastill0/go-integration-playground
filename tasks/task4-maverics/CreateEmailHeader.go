@@ -1,4 +1,4 @@
-package CreateEmailHeader
+package main
 
 import (
 	"context"
