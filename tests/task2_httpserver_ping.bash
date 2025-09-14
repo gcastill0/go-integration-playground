@@ -31,4 +31,4 @@ if [ "${BODY}" != '{"message":"pong"}' ]; then
 fi
 
 echo
-echo "OK: /ping returned 200 and response ${BODY}"
+echo "OK: /ping returned ${STATUS} and response \"${BODY}\""

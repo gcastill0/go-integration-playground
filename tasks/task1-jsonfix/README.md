@@ -2,7 +2,7 @@
 
 The goal of this task is to treat a malformed JSON document, explain errors in terms of the JSON grammar, and produce a corrected, well-formed version. We take a layered, testable approach: first validate syntax, then show evidence.
 
-You can navigate through this article through this menu:
+You can navigate through this article using this menu:
 
 1. [Validation](#validation)
 2. [Exercise Details](#exercise-details)
@@ -12,9 +12,13 @@ You can navigate through this article through this menu:
 
 Quick estimates for reading:
 
-  * Fast skim: ~4-6 minutes.
-  * Typical technical read: ~8–10 minutes.
-  * Careful read: ~10–15 minutes.
+| Reading mode           | Estimate        |
+| ---------------------- | --------------- |
+| Fast skim              | \~4–6 minutes   |
+| Typical technical read | \~6–10 minutes  |
+| Careful read           | \~10–15 minutes |
+
+For questions or feedback, please contact me using [this form](https://gcastill0.github.io/#contact).
 
 ## Validation
 

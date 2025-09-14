@@ -31,4 +31,4 @@ if [ "${BODY}" != "Hello, world" ] && [ "${BODY}" != $'Hello, world\n' ]; then
 fi
 
 echo
-echo "OK: / returned 200 and expected body"
+echo "OK: / returned ${STATUS} and response \"${BODY}\""

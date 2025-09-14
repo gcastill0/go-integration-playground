@@ -31,4 +31,4 @@ if [ "${BODY}" != '{"name":"test"}' ]; then
 fi
 
 echo
-echo "OK: /echo returned 200 and response ${BODY}"
+echo "OK: /echo returned ${STATUS} and response \"${BODY}\""
