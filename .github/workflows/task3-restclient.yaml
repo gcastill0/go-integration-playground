@@ -46,17 +46,17 @@ jobs:
         run: go build ./...
 
       - id: no_args
-        name: Bash test for Task 2 (index route)
+        name: Bash test for Task 3 - Client with no URL
         shell: bash
         run: |
           chmod +x tests/task3_restclient_no_args.bash
-          ./tests/task3_restclient_no_args.bash > base.log 2>&1
+          ./tests/task3_restclient_no_args.bash > no_args.log 2>&1
           cat no_args.log
           OUTPUT="$(grep -Ei 'pass|fail' no_args.log)"
           echo "::set-output name=OUTPUT::${OUTPUT}"
 
       - id: invalid_url
-        name: Bash test for Task 2 (index route)
+        name: Bash test for Task 3 - Client with invalid URL
         shell: bash
         run: |
           chmod +x tests/task3_restclient_invalid_url.bash
@@ -66,7 +66,7 @@ jobs:
           echo "::set-output name=OUTPUT::${OUTPUT}"
 
       - id: invalid_user
-        name: Bash test for Task 2 (index route)
+        name: Bash test for Task 3 - Client with invalid User
         shell: bash
         run: |
           chmod +x tests/task3_restclient_invalid_user.bash
@@ -76,7 +76,7 @@ jobs:
           echo "::set-output name=OUTPUT::${OUTPUT}"
 
       - id: valid_user
-        name: Bash test for Task 2 (index route)
+        name: Bash test for Task 3 - Client with valid User
         shell: bash
         run: |
           chmod +x tests/task3_restclient_valid_user.bash
