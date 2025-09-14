@@ -96,32 +96,34 @@ jobs:
             echo
             echo "| Test | Result |"
             echo "|------|--------|"
-            echo "| Base \`/\` | **${{ steps.no_args.outputs.OUTPUT || 'skipped' }}** |"
-            echo "| GET /ping | **${{ steps.invalid_url.outputs.OUTPUT || 'skipped' }}** |"
-            echo "| POST /echo | **${{ steps.invalid_user.outputs.OUTPUT || 'skipped' }}** |"
-            echo "| POST /echo | **${{ steps.valid_user.outputs.OUTPUT || 'skipped' }}** |"
+            echo "| Empty URL | **${{ steps.no_args.outputs.OUTPUT || 'skipped' }}** |"
+            echo "| Invalid URL | **${{ steps.invalid_url.outputs.OUTPUT || 'skipped' }}** |"
+            echo "| Valid URL, invalid user | **${{ steps.invalid_user.outputs.OUTPUT || 'skipped' }}** |"
+            echo "| Valid URL and user | **${{ steps.valid_user.outputs.OUTPUT || 'skipped' }}** |"
             echo
-            echo "<details><summary>Base HTTP Service</summary>"
+            echo "<details><summary>Empty URL</summary>"
             echo
             echo '```text'
             cat no_args.log || true
             echo '```'
             echo "</details>"
             echo
-            echo "<details><summary>GET /ping</summary>"
+            echo "<details><summary>Invalid URL</summary>"
             echo
             echo '```text'
             cat invalid_url.log || true
             echo '```'
             echo "</details>"
             echo
-            echo "<details><summary>POST /echo</summary>"
+            echo "<details><summary>Valid URL, invalid user</summary>"
             echo
             echo '```text'
             cat invalid_user.log || true
             echo '```'
             echo
             echo "</details>"
+            echo
+            echo "<details><summary>Valid URL and user</summary>"
             echo
             echo '```text'
             cat valid_user.log || true
