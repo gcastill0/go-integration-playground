@@ -1,4 +1,4 @@
-name: Lint JSON (task1-jsonfix)
+name: Task 1 - JSON Grammar
 
 on:
   push:

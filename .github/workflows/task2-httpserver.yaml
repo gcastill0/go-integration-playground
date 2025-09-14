@@ -1,4 +1,4 @@
-name: Test (Task 2 HTTP server)
+name: Task 2 - HTTP server
 
 on:
   push:
