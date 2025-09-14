@@ -43,7 +43,9 @@ jobs:
         run: go mod download
 
       - name: Build packages
-        run: go build ./...
+        run: | 
+          go get github.com/strata-io/service-extension/orchestrator
+          go build ./...
 
       - id: base
         name: Bash test for Task 2 (index route)
