@@ -4,7 +4,7 @@ set -euo pipefail
 
 CLIENT="./tasks/task3-restclient"  # entry path for `go run`
 API_URL="https://jsonplaceholder.typicode.com/users" # note the extra `s` on `.com`
-USER_ID="999"
+USER_ID="2"
 
 out="$(mktemp)"; err="$(mktemp)"
 cleanup() { rm -f "$out" "$err"; }
@@ -22,25 +22,26 @@ if [[ "$last" =~ exit\ status\ ([0-9]+) ]]; then
 fi
 
 # Assertions
-if [[ "$code" -ne 3 ]]; then
-  echo "FAIL: expected exit code 3, got $code"
+if [[ "$code" -ne 0 ]]; then
+  echo "FAIL: expected exit code 0, got $code"
   echo "stderr:"; sed -n '1,200p' "$err" || true
   echo "stdout:"; sed -n '1,200p' "$out" || true
   exit 1
 fi
 
-if ! grep -qi 'Preflight:' "$err" || ! grep -q 'HEAD' "$err"; then
-  echo "FAIL: expected Preflight message with HEAD on stderr"
-  echo "stderr:"; sed -n '1,200p' "$err" || true
-  exit 1
+# Stderr should generally be empty on success; warn (don’t fail) if not.
+if [[ -s "$err" ]]; then
+  echo "NOTE: stderr not empty on success:"
+  sed -n '1,200p' "$err" || true
 fi
 
-if [[ -s "$out" ]]; then
-  echo "FAIL: expected empty stdout for usage case"
-  echo "stdout:"; sed -n '1,200p' "$out" || true
-  exit 1
-fi
+# Expect a JSON body containing known fields for user 2
+grep -q '"id": 2' "$out" || { echo 'FAIL: expected `"id": 2` in stdout'; exit 1; }
+grep -q '"email": "Shanna@melissa.tv"' "$out" || { echo 'FAIL: expected email in stdout'; exit 1; }
+grep -q '"phone": "010-692-6593 x09125"' "$out" || { echo 'FAIL: expected phone in stdout'; exit 1; }
+grep -q '"company":' "$out" || { echo 'FAIL: expected company object in stdout'; exit 1; }
+grep -q '"name": "Deckow-Crist"' "$out" || { echo 'FAIL: expected company name in stdout'; exit 1; }
 
 echo "ARGS: go run $CLIENT $API_URL/$USER_ID"
-echo "PASS: Preflight -> Not Found and exit $code."
-echo ""; sed -n '1,200p' "$err" || true
+echo "PASS: Preflight -> $USER_ID found and exit $code."
+echo ""; sed -n '1,200p' "$out" || true

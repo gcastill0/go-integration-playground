@@ -89,11 +89,11 @@ This concept is also is outside of the scope of this task, but it is relevant fo
 
 ## Exercise Details
 
-The document presents an array of three objects with two syntax errors in the document structure. 
+The document presents an array of three objects with two syntax errors in the JSON grammar which affects the document structure. 
 
-* After the data array opening with a left bracket `[` symbol, the first object is missing a curly brace `{` before the first `"id"` key. 
+1. After the data array opening with a left bracket (`[`) symbol, the first object is missing a curly brace (`{`) before the first `"id"` key. 
 
-    The snippet shown below shows the first object in the original file - [See lines 1–24 of jdoc_original.json](https://github.com/gcastill0/go-integration-playground/blob/main/tasks/task1-jsonfix/data/jdoc_original.json#L1-L24). Note specifically that the first object is missing the opening handlebar ('{') which should be located in line 2.
+    The snippet shown below shows the first object in the original file - [See lines 1–24 of jdoc_original.json](https://github.com/gcastill0/go-integration-playground/blob/main/tasks/task1-jsonfix/data/jdoc_original.json#L1-L24). Note specifically that the first object is missing the opening handlebar (`{`) which should be located in line 2.
 
     ```json
     01  [
@@ -124,9 +124,9 @@ The document presents an array of three objects with two syntax errors in the do
 
 <br>
 
-* The data structure never closes the array with a right bracket `]` symbol after the third object; the file closes on the last curly brace `}` which belongs to the last object.
+2. The data structure never closes the array with a right bracket (`]`) symbol after the third object; the file closes on the last curly brace (`}`) which belongs to the last object.
 
-    The following snippet shows the last object in the dictionrary from original file - [See lines 48–71 of jdoc_original.json](https://github.com/gcastill0/go-integration-playground/blob/main/tasks/task1-jsonfix/data/jdoc_original.json#L48-L71). Note specifically that the array is missing the closing bracker (']') which should be located in line 71.
+    The following snippet shows the last object in the dictionrary from original file - [See lines 48–71 of jdoc_original.json](https://github.com/gcastill0/go-integration-playground/blob/main/tasks/task1-jsonfix/data/jdoc_original.json#L48-L71). Note specifically that the array is missing the closing bracker (`]`) which should be located in line 71.
 
     ```json
     48    {
@@ -161,9 +161,9 @@ The document presents an array of three objects with two syntax errors in the do
 
 There are two minimal fixes: 
 
-1. insert a left handle bar, or left curly brace, `{` on line 2, right after the opening left bracket `[` on line 1, and 
+1. insert a left handle bar, or left curly brace (`{`) on line 2, right after the opening left bracket (`[`) on line 1, and 
 
-2. add the closing right bracker, `]`, at the end of the array on line 71.
+2. add the closing right bracker, (`]`), at the end of the array on line 71.
 
 <br>
 
@@ -173,7 +173,7 @@ With JSON, there two primary composite components: objects and arrays.
 
 ### Arrays
 
-An array is an ordered sequence of values. It is delimited by a left bracket “[” and a right bracket “]”. Elements are separated by commas, and each element may be any JSON value, including strings, numbers, booleans, null, objects, or other arrays. Order is semantically meaningful: consumers interpret elements by their position in the sequence. 
+An array is an ordered sequence of values. It is delimited by a left bracket (`[`) and a right bracket (`]`). Elements are separated by commas, and each element may be any JSON value, including strings, numbers, booleans, null, objects, or other arrays. Order is semantically meaningful: consumers interpret elements by their position in the sequence. 
 
 In this exercise, the data structure encloses all objects in a single array as follows:
 
@@ -192,13 +192,13 @@ flowchart LR
 
 ```
 
-While JSON does not define indices, most programming languages interpret arrays with zero-based indexing, so the first element is at index 0, the second at index 1, and so on. Arrays may be empty. Trailing commas are not permitted, and JSON does not support “holes”; every position must contain a value, so an absent value must be represented explicitly, for example with null.
+While JSON does not define indices, most programming languages interpret arrays with zero-based indexing, so the first element is at index 0, the second at index 1, and so on. Arrays may be empty. Trailing commas are not permitted, and JSON does not support "holes"; every position must contain a value, so an absent value must be represented explicitly, for example with null.
 
 ### Objects
 
-An object is an unordered mapping from string keys to values. It is written between a left curly brace “{” and a right curly brace “}”. Each member consists of a double-quoted key, a colon, and a value, and members are separated by commas. Values may be any JSON value (string, number, boolean, null, array, or another object).
+An object is an unordered mapping from string keys to values. It is written between a left curly brace (`{`) and a right curly brace (`}`). Each member consists of a double-quoted key, a colon, and a value, and members are separated by commas. Values may be any JSON type: string, number, boolean, null, array, or another object.
 
-To illustrate, the following is a representation of the object structure from the original JSON document.
+To illustrate, the following is a representation of the object's semantic structure in the original JSON document.
 
 ```mermaid
 ---
@@ -239,7 +239,9 @@ Here are the top three considerations:
 
 ## Conclusion
 
-In this task we treated JSON correctness as a small, testable pipeline: parse first, then prove it. By validating syntax with command-line tools like `jq` and wiring Super-linter to gate every push and pull request, we ensure that malformed documents never make it past review. We then documented the exact grammar violations and demonstrated the minimal, targeted fixes needed to restore a well-formed structure.
+In this task we treated JSON correctness as a small, testable pipeline: parse first, then prove it. By validating syntax with command-line tools like `jq`. Wiring Super-linter offers an automated gate on every push and pull requests to ensure that malformed documents never make it past review. 
+
+We then documented the exact grammar violations and demonstrated the minimal, targeted fixes needed to restore a well-formed structure.
 
 <br>
 <br>

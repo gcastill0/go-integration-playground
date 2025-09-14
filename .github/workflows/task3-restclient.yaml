@@ -1,0 +1,132 @@
+name: Test (Task 3 REST API Client)
+
+on:
+  push:
+    paths:
+      - 'go.mod'
+      - 'go.sum'
+      - 'tasks/task3-restclient/**'
+      - 'tests/**'
+  pull_request:
+    paths:
+      - 'go.mod'
+      - 'go.sum'
+      - 'tasks/task3-restclient/**'
+      - 'tests/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        with: 
+          token: ${{ secrets.MAVERICS }}
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.25.x'
+          cache: true
+          cache-dependency-path: go.sum
+
+      - name: Go env
+        run: |
+          go version
+          go env GOPATH GOMOD GOMODCACHE
+
+      - name: Download modules
+        run: go mod download
+
+      - name: Build packages
+        run: go build ./...
+
+      - id: no_args
+        name: Bash test for Task 2 (index route)
+        shell: bash
+        run: |
+          chmod +x tests/task3_restclient_no_args.bash
+          ./tests/task3_restclient_no_args.bash > base.log 2>&1
+          cat no_args.log
+          OUTPUT="$(grep -Ei 'pass|fail' no_args.log)"
+          echo "::set-output name=OUTPUT::${OUTPUT}"
+
+      - id: invalid_url
+        name: Bash test for Task 2 (index route)
+        shell: bash
+        run: |
+          chmod +x tests/task3_restclient_invalid_url.bash
+          ./tests/task3_restclient_invalid_url.bash > invalid_url.log 2>&1
+          cat invalid_url.log
+          OUTPUT="$(grep -Ei 'pass|fail' invalid_url.log)"
+          echo "::set-output name=OUTPUT::${OUTPUT}"
+
+      - id: invalid_user
+        name: Bash test for Task 2 (index route)
+        shell: bash
+        run: |
+          chmod +x tests/task3_restclient_invalid_user.bash
+          ./tests/task3_restclient_invalid_user.bash > invalid_user.log 2>&1
+          cat invalid_user.log
+          OUTPUT="$(grep -Ei 'pass|fail' invalid_user.log)"
+          echo "::set-output name=OUTPUT::${OUTPUT}"
+
+      - id: valid_user
+        name: Bash test for Task 2 (index route)
+        shell: bash
+        run: |
+          chmod +x tests/task3_restclient_valid_user.bash
+          ./tests/task3_restclient_valid_user.bash > valid_user.log 2>&1
+          cat valid_user.log
+          OUTPUT="$(grep -Ei 'pass|fail' valid_user.log)"
+          echo "::set-output name=OUTPUT::${OUTPUT}"
+
+      # ----- Summary (always runs, even if a test failed) ------------------
+
+      - name: Write job summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "## Task 2 HTTP Server — Test Summary"
+            echo
+            echo "| Test | Result |"
+            echo "|------|--------|"
+            echo "| Base \`/\` | **${{ steps.no_args.outputs.OUTPUT || 'skipped' }}** |"
+            echo "| GET /ping | **${{ steps.invalid_url.outputs.OUTPUT || 'skipped' }}** |"
+            echo "| POST /echo | **${{ steps.invalid_user.outputs.OUTPUT || 'skipped' }}** |"
+            echo "| POST /echo | **${{ steps.valid_user.outputs.OUTPUT || 'skipped' }}** |"
+            echo
+            echo "<details><summary>Base HTTP Service</summary>"
+            echo
+            echo '```text'
+            cat no_args.log || true
+            echo '```'
+            echo "</details>"
+            echo
+            echo "<details><summary>GET /ping</summary>"
+            echo
+            echo '```text'
+            cat invalid_url.log || true
+            echo '```'
+            echo "</details>"
+            echo
+            echo "<details><summary>POST /echo</summary>"
+            echo
+            echo '```text'
+            cat invalid_user.log || true
+            echo '```'
+            echo
+            echo "</details>"
+            echo
+            echo '```text'
+            cat valid_user.log || true
+            echo '```'
+            echo "</details>"
+            echo
+            echo "> Repo: $GITHUB_REPOSITORY • Run: $GITHUB_RUN_ID • Commit: \`$GITHUB_SHA\`"
+          } >> "$GITHUB_STEP_SUMMARY"
