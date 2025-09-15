@@ -194,12 +194,6 @@ A Go client was built to fetch user details from the [JSONPlaceholder API](https
 ### How to Test
 Run the client:
 
-If not done yet, you need to install the Maverics service extension as follows:
-
-```bash
-go get github.com/strata-io/service-extension/orchestrator
-```
-
 To run the REST API Client, use the following command:
 
 ```bash
@@ -237,7 +231,15 @@ The header `CUSTOM-EMAIL` should appear in outbound requests.
 
 1. **Using a shim**. In this exercise, we use a shim, or development harness, to mimic or stand in for the real system. Open two terminals to begin this testing exercise.
 
-    On the first terminal, invoke the shim to test the service extension.
+    On the first terminal, do the following:
+
+    If not done yet, you need to install the Maverics service extension as follows:
+
+    ```bash
+    go get github.com/strata-io/service-extension/orchestrator
+    ```
+
+    Invoke the shim to test the service extension
 
     ```bash
     go run ./tasks/task3-restclient https://jsonplaceholder.typicode.com/users/2
