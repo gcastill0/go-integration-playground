@@ -106,7 +106,7 @@ Invoking an endpoint through Maverics:
 curl -ik https://127.0.0.1/anything
 ```
 
-Sample upstream response showing the injected header:
+Sample upstream response showing the expected, injected header:
 
 ```json
 "headers": {
@@ -127,7 +127,7 @@ This diagram shows the main components and their connections: the client sends t
 config:
   layout: elk
 ---
-flowchart TB
+flowchart LR
  subgraph IdPs["Identity Providers"]
         AAD["Azure AD"]
   end
@@ -145,9 +145,11 @@ flowchart TB
 
 ### Challenges
 
-During the effort to validate the **CreateEmailHeader** Service Extension in Maverics, the main challenge has been that although the extension executes successfully in isolation, the **`CUSTOM-EMAIL`** header does not appear in the proxied request responses. Every test request consistently returns a **200 OK** status, which confirms that routing, upstream connectivity, and policy evaluation are functioning. However, the expected custom header is not visible in the response.
+During the effort to validate the **CreateEmailHeader** Service Extension in Maverics, the main challenge has been that although the extension executes successfully in isolation, the **`CUSTOM-EMAIL`** header does not appear in the proxied request responses. Every test request consistently returns a **200 OK** status, which confirms that routing, upstream connectivity, and policy evaluation are functioning. 
 
-A series of checks and adjustments have already been made:
+However, the expected custom header is not visible in the response.
+
+Here is a series of checks and adjustments have already been made:
 
 * Verified the Go code compiles and runs correctly outside Maverics.
 * Confirmed the Service Extension is loaded into the bundle (present in `serviceExtensionMetadata`).
