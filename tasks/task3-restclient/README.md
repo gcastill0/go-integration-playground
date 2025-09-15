@@ -169,7 +169,7 @@ In this project, GitHub Actions is configured to run against the Go source direc
 
 After a run completes, the summary page attached to the commit or pull request shows whether the tests passed, the steps executed, and the console output. This provides quick assurance that the client fetches and formats user data correctly.
 
-## Task 2 HTTP Server — Test Summary
+### Task 2 HTTP Server — Test Summary
 
 | Test | Result |
 |------|--------|
