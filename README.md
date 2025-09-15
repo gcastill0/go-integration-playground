@@ -129,11 +129,6 @@ There are two minimal fixes:
 2. add the closing right bracker, (`]`), at the end of the array on line 71.
 
 
-### Sample Result
-```
-Valid JSON
-```
-
 ### Conclusion
 This exercise confirmed the ability to recognize structural problems in JSON documents and fix them for use in APIs or data pipelines.
 
@@ -268,8 +263,6 @@ The header `CUSTOM-EMAIL` should appear in outbound requests.
 <br>
 
 2. **Maverics Orchestrator**. During this enrichment phase, the service extension `CreateEmailHeader` is invoked. The extension calls on a predefined URL API and extracts the user’s email and returns it as an `http.Header` to Maverics. The orchestrator then merges this header, specifically, the `CUSTOM-EMAIL` header set to the fetched email into the outbound request and forwards it to the upstream application.
-
-    <br>
 
     We can demonstrate this running the Maverics Orchestrator locally. Here is an example:
 
