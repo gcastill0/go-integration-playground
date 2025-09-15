@@ -12,6 +12,8 @@ Quick estimates for reading:
 | Typical technical read | \~6–10 minutes  |
 | Careful read           | \~10–15 minutes |
 
+For questions or feedback, please contact me using [this form](https://gcastill0.github.io/#contact).
+
 ## What this client does
 
 The REST client requests user information from `https://jsonplaceholder.typicode.com/users/<id>`. It extracts specific fields from the JSON response—`id`, `email`, `phone`, and the `company` object—and prints them in a structured format. This confirms the ability to call external APIs, parse structured data, and format output.
@@ -239,7 +241,7 @@ This task demonstrates how to build a Go HTTP client that integrates with a REST
 
 ---
 
-JSON Sample: Original author
-Go Snippets: Original author
+JSON Sample: Original author<br>
+Go Snippets: Original author<br>
 New Go Code: Apache License © 2025 G Castillo — see [LICENSE](/LICENSE).
 This README and notes: CC BY 4.0 © 2025 G Castillo.

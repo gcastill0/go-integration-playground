@@ -12,6 +12,8 @@ Quick estimates for reading:
 | Typical technical read | \~6–10 minutes  |
 | Careful read           | \~10–15 minutes |
 
+For questions or feedback, please contact me using [this form](https://gcastill0.github.io/#contact).
+
 ## What this service does
 
 The server responds to a health-style probe at `/ping` with a JSON message indicating the service is reachable, and it echoes any JSON document posted to `/echo` back to the caller. The `utils` package centralizes common HTTP concerns such as writing JSON responses, applying headers, and uniform error payloads, which keeps the endpoint handlers concise and predictable. The end-to-end behavior matches the assessment’s expected outputs.
