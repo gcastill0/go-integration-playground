@@ -6,23 +6,11 @@ This task implements a small HTTP server in Go that listens on port 8080 and exp
 
 The server responds to a health-style probe at `/ping` with a JSON message indicating the service is reachable, and it echoes any JSON document posted to `/echo` back to the caller. The `utils` package centralizes common HTTP concerns such as writing JSON responses, applying headers, and uniform error payloads, which keeps the endpoint handlers concise and predictable. The end-to-end behavior matches the assessment’s expected outputs.
 
-## Requirements
+### GET Verb, `/ping` Endpoint
 
-You need a recent Go toolchain (Go 1.22 or newer is sufficient). No external services are required to run or test this task locally. The repository already includes everything needed to run the server, its tests, and the GitHub Actions workflow that validates the build and tests in CI.
+The HTTP verb GET is used by a client to request information from a server without modifying any data. It is safe and idempotent, meaning repeated calls should always return the same result without side effects. In this task, the /ping endpoint serves as a simple health check. When the client sends a GET request to /ping, the server responds with a lightweight JSON message {"message":"pong"}. 
 
-## How to run the server
-
-From the repository root, start the server with a standard `go run` invocation pointing to the task’s main package. If the task is laid out as a package directory with a `main.go`, you can start it like this:
-
-```
-go run ./tasks/task2-httpserver
-```
-
-Once running, the server listens on `127.0.0.1:8080`.
-
-## How to verify the endpoints
-
-### GET Verb, `/Ping` Endpoint
+This exchange confirms that the server is up, reachable, and able to process requests, making it a quick diagnostic tool before deeper interactions. 
 
 ```mermaid
 sequenceDiagram
@@ -43,6 +31,46 @@ sequenceDiagram
     S-->>C: 200 OK + JSON
     C-->>Res: Render body
 ```
+
+### POST Verb, `/echo` Endpoint
+
+The HTTP verb POST sends data from the client to the server to be processed. It is not idempotent and is typically used to create or submit content in the request body. In this task, the /echo endpoint accepts a JSON payload and returns the same JSON back to the caller. This confirms that the server can read the body, parse JSON, and write a correct JSON response, making it a simple round-trip integrity check before more complex interactions.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor C as Client
+    participant S as HTTP Server
+    participant R as Router
+    participant H as Echo Handler
+    participant U as Utils
+
+    C->>S: POST /echo + JSON
+    S->>R: Route
+    R->>H: Match /echo
+    H->>H: Read body
+    H->>H: Parse JSON
+    H->>U: Write JSON 200
+    U-->>H: OK
+    H-->>S: Response ready
+    S-->>C: 200 + same JSON
+```
+
+## Requirements
+
+You need a recent Go toolchain (Go 1.22 or newer is sufficient). No external services are required to run or test this task locally. The repository already includes everything needed to run the server, its tests, and the GitHub Actions workflow that validates the build and tests in CI.
+
+## How to run the server
+
+From the repository root, start the server with a standard `go run` invocation pointing to the task’s main package. If the task is laid out as a package directory with a `main.go`, you can start it like this:
+
+```
+go run ./tasks/task2-httpserver
+```
+
+Once running, the server listens on `127.0.0.1:8080`.
+
+## How to verify the endpoints
 
 You can verify the `GET /ping` endpoint by calling it from another shell. A successful response returns a small JSON object with a message confirming liveness.
 
