@@ -5,14 +5,16 @@ The project documents solutions with Go (Golang) by solving four practical integ
 
 ## Table of Contents
 
-1. [Task 1 – JSON Validation](#task-1--json-validation)  
-2. [Task 2 – HTTP Server](#task-2--http-server)  
-3. [Task 3 – REST API Client](#task-3--rest-api-client)  
-4. [Task 4 – Maverics Service Extension](#task-4--maverics-service-extension)  
-5. [Final Notes](#final-notes)
+Each section below explains the task, shows how to run and test the solution, provides sample results, and closes with a short conclusion. The README files in the [Tasks](tasks) folder have an expanded explanation, along with details on testing.
 
+| In this document | In the [Tasks](tasks) folder |
+| ---------------- | ----------------------------: |
+| [Task 1 – JSON Validation](#task-1--json-validation)  |  [jsonfix](./tasks/task1-jsonfix/README.md) |
+| [Task 2 – HTTP Server](#task-2--http-server) |  [httpserver](./tasks/task2-httpserver/README.md) |
+| [Task 3 – REST API Client](#task-3--rest-api-client)  |  [restclient](./tasks/task3-restclient/README.md) |
+| [Task 4 – Maverics Service Extension](#task-4--maverics-service-extension)  |  [maverics](./tasks/task4-maverics/README.md) | |
 
-Each section below explains the task, shows how to run and test the solution, provides sample results, and closes with a short conclusion.
+<br>
 
 Quick estimates for reading:
 
