@@ -2,7 +2,7 @@
 
 This task implements a small HTTP server in Go that listens on port 8080 and exposes two endpoints for quick integration checks. The goal is to demonstrate a clean request and response flow using JSON, along with a minimal set of helper functions collected under a `utils` package to keep handlers focused. The implementation passes the included unit tests and is wired to run successfully in GitHub Actions.
 
-This project also includes a custom service extension that demonstrates how headers can be added and logic injected into request handling. The extension is not required for the basic HTTP server to function; rather, it is included as part of the assessment to show how Go code can be structured to extend or enrich an orchestrator. Its purpose here is purely self-educational, giving a safe and contained way to practice writing integration logic. By treating it as a learning tool, you can experiment with how the extension interacts with requests and headers without risk to production systems.
+This project also includes custom service extensions for content validation and JSON validation. The extensions are not required for the basic HTTP server to function; rather, they are included as part of the assessment to show how Go code can be structured to extend or enrich an orchestrator. The purpose here is purely self-educational, giving me a safe and contained way to practice writing integration logic. 
 
 Quick estimates for reading:
 
