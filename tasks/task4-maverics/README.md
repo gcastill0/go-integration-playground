@@ -1,7 +1,3 @@
-Here’s a draft `README.md` for **Task 4 – Maverics Service Extension**, modeled after the style and structure you used in Task 2 and Task 3. It includes a sequence diagram, a simple UML component diagram, and an explanation of the shim/dev harness.
-
----
-
 # Task 4 — Maverics Service Extension
 
 This task extends the Maverics Orchestrator with a custom service extension. The extension fetches a user record from the JSONPlaceholder API, extracts the user’s email (for user ID 2), and injects that email address as a custom HTTP header (`CUSTOM-EMAIL`) into outbound requests.
