@@ -349,6 +349,7 @@ The header `CUSTOM-EMAIL` should appear in outbound requests.
     }
     ```
 
+Please see the note about challenges in the [maverics](./tasks/task4-maverics/README.md#challenges) readme.
 
 ### Conclusion
 This task ties together Go coding, REST integration, and product extension. It demonstrates how to augment a commercial orchestrator with custom logic using Go.
