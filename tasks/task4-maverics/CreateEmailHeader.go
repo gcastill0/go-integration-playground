@@ -41,6 +41,7 @@ func CreateEmailHeader(
 	defer cancel()
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+
 	if err != nil {
 		return nil, fmt.Errorf("build request: %w", err)
 	}
@@ -70,5 +71,8 @@ func CreateEmailHeader(
 	// Build and return the header to the orchestrator.
 	header := make(http.Header)
 	header["CUSTOM-EMAIL"] = []string{email}
+
+	logger.Info("se", "custom email header built", "header", header)
+
 	return header, nil
 }

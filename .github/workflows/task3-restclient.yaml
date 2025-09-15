@@ -45,7 +45,7 @@ jobs:
       - name: Build packages
         run: | 
           go get github.com/strata-io/service-extension/orchestrator
-          go build ./...
+          go build ./tasks/task3-restclient/...
 
       - id: no_args
         name: Bash test for Task 3 - Client with no URL
