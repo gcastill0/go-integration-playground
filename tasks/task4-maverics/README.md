@@ -161,7 +161,7 @@ Here is a series of checks and adjustments have already been made:
 * Tested both unauthenticated pass-through and policy-scoped Service Extension execution.
 * Reviewed log output to confirm requests are routed correctly and consistently return **200 OK**.
 
-At this point, the configuration and code paths appear correct, and all major failure scenarios have been ruled out. The issue is most likely due to a small and trivial mis-scoping detail—for example, a mismatch between the policy `location` and the request path, or how the Service Extension is referenced inside the policy.
+At this point, the configuration and code paths appear correct, and all major failure scenarios have been ruled out. The issue is most likely due to a small and trivial mis-scoping detail, a mismatch between the policy `location` and the request path, or how the Service Extension is referenced inside the policy.
 
 <br>
 
