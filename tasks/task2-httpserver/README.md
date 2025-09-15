@@ -94,13 +94,15 @@ You can verify the `POST /echo` endpoint by posting any JSON body to it. The ser
 curl -s -X POST http://127.0.0.1:8080/echo -H "Content-Type: application/json" -d '{"name":"test"}'
 ```
 
-## About the utils package
+### About the utils package
 
 The `utils` folder under `tasks/task2-httpserver/utils` contains the reusable building blocks the handlers depend on. These typically include helpers to marshal and write JSON with the correct content type, helpers to write errors in a consistent JSON format, and small conveniences for header management or input validation. By placing this logic in a separate package, the handlers for `/ping` and `/echo` remain straightforward and easy to read, while the utilities provide a single source of truth for response formatting.
 
 ## How to run the tests
 
-The tests for this task are written as Bash scripts. The test scripts start by launching the 2 HTTP server and waiting until it is listening on port 8080, ensuring the service is ready to accept requests. Once the HTTP service is running, the test invokes the running server with `curl`, assert HTTP status codes and JSON bodies, and returns non-zero exit codes on failure so they integrate cleanly with `go test` wrappers or GitHub Actions. This approach keeps dependencies minimal, runs on any POSIX shell in CI, and verifies the two behaviors end to end: `GET /ping` must return a 200 with `{"message":"pong"}`, and `POST /echo` must return a 200 with the exact JSON payload sent.
+The tests for this task are written as Bash scripts. The test scripts start by launching the HTTP server and waiting until it is listening on port 8080, ensuring the service is ready to accept requests. Once the HTTP service is running, the test invokes the running server with `curl`, assert HTTP status codes and JSON bodies, and returns non-zero exit codes on failure so they integrate cleanly with `go test` wrappers or GitHub Actions. 
+
+This approach keeps dependencies minimal, runs on any POSIX shell in CI, and verifies the two behaviors end to end: `GET /ping` must return a 200 with `{"message":"pong"}`, and `POST /echo` must return a 200 with the exact JSON payload sent.
 
 **`tests/task2_httpserver_base.bash`** is the common harness that prepares and controls the test environment. It typically builds or launches the HTTP server for Task 2, waits until port 8080 is accepting connections, exports any needed variables, and sets traps to cleanly stop the server on exit. It also provides small helper functions (for curling endpoints, asserting status codes, and comparing JSON) so the specific test scripts can focus on behavior rather than setup.
 
