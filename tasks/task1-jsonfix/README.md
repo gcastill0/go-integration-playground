@@ -208,7 +208,7 @@ config:
   theme: mc
 ---
 flowchart LR
-    U["JSON Object { }"] --> id["id"] & name["name"] & username["username"] & email["email"] & phone["phone"] & website["website"] & address["address: { ... }  (object)"] & company["company: { ... }  (object)"]
+    U["JSON [ ... ] (array)"] --> id["id"] & name["name"] & username["username"] & email["email"] & phone["phone"] & website["website"] & address["address: { ... }  (object)"] & company["company: { ... }  (object)"]
     address --> street["street"] & suite["suite"] & city["city"] & zipcode["zipcode"] & geo["geo: { ... }  (object)"]
     geo --> lat["lat"] & lng["lng"]
     company --> cname["name"] & catch["catchPhrase"] & bs["bs"]
