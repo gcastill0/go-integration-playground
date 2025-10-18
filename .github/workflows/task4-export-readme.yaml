@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - README.md
+      - tasks/task1-jsonfix/README.md
 
 jobs:
   export:
