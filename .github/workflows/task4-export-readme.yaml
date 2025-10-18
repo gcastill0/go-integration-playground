@@ -20,7 +20,7 @@ jobs:
       - name: Render Mermaid diagrams
         run: |
             npm install -g @mermaid-js/mermaid-cli
-            mmdc -i diagrams/main.mmd -o diagrams/main.svg
+            mmdc -i tasks/task1-jsonfix/diagrams/main.mmd -o tasks/task1-jsonfix/diagrams/main.svg
 
       - name: Build DOCX
         run: |
