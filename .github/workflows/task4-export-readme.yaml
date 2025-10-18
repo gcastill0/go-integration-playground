@@ -15,17 +15,26 @@ jobs:
 
       - name: Install Node.js + npm
         run: |
-            apk add --no-cache nodejs npm
+            apk add --no-cache nodejs npm npm chromium nss freetype harfbuzz ttf-freefont font-noto
             
-      - name: Render Mermaid diagrams
+      - name: Install Mermaid CLI
+        run: npm install -g @mermaid-js/mermaid-cli
+
+      - name: Puppeteer config
         run: |
-            npm install -g @mermaid-js/mermaid-cli
+            cat > puppeteer-config.json <<'JSON'
+            { "executablePath": "/usr/bin/chromium",
+            "args": ["--no-sandbox","--disable-setuid-sandbox"] }
+            JSON
+
+      - name: Render Mermaid → SVG
+        run: |
             found=0
             for f in tasks/task1-jsonfix/diagrams/*.mmd; do
                 [ -e "$f" ] || continue
                 found=1
                 out="${f%.*}.svg"
-                mmdc -i "$f" -o "$out"
+                mmdc -i "$f" -o "$out" -p puppeteer-config.json
                 echo "Rendered $f → $out"
             done
             [ "$found" -eq 1 ] || echo "No Mermaid files under diagrams/. Skipping."
