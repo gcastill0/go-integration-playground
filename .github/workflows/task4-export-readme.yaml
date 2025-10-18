@@ -20,7 +20,16 @@ jobs:
       - name: Render Mermaid diagrams
         run: |
             npm install -g @mermaid-js/mermaid-cli
-            mmdc -i tasks/task1-jsonfix/diagrams/main.mmd -o tasks/task1-jsonfix/diagrams/main.svg
+            shopt -s nullglob
+            files=(tasks/task1-jsonfix/diagrams/*.mmd)
+            if [ ${#files[@]} -eq 0 ]; then
+              echo "No Mermaid files found under diagrams/. Skipping."
+              exit 0
+            fi
+            for f in "${files[@]}"; do
+              mmdc -i "$f" -o "${f%.mmd}.svg"
+              echo "Rendered $f → ${f%.mmd}.svg"
+            done
 
       - name: Build DOCX
         run: |
