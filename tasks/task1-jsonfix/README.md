@@ -177,7 +177,7 @@ An array is an ordered sequence of values. It is delimited by a left bracket (`[
 
 In this exercise, the data structure encloses all objects in a single array as follows:
 
-![JSON Structure](/tasks/task1-jsonfix/diagrams/diagram-01.svg)
+![JSON Structure](tasks/task1-jsonfix/diagrams/diagram-01.svg)
 
 While JSON does not define indices, most programming languages interpret arrays with zero-based indexing, so the first element is at index 0, the second at index 1, and so on. Arrays may be empty. Trailing commas are not permitted, and JSON does not support "holes"; every position must contain a value, so an absent value must be represented explicitly, for example with null.
 
@@ -187,7 +187,7 @@ An object is an unordered mapping from string keys to values. It is written betw
 
 To illustrate, the following is a representation of the object's semantic structure in the original JSON document.
 
-![Data Structure](/tasks/task1-jsonfix/diagrams/diagram-02.svg)
+![Data Structure](tasks/task1-jsonfix/diagrams/diagram-02.svg)
 
 The order of members has no semantic meaning; you retrieve information by key, as with a dictionary or hash map. Keys should be unique because the standard does not define behavior for duplicates, and trailing commas after the final member are not permitted.
 
