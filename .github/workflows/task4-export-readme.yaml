@@ -15,7 +15,7 @@ jobs:
 
       - name: Install Node.js + npm
         run: |
-            apk add --no-cache nodejs npm shopt
+            apk add --no-cache nodejs npm
             
       - name: Render Mermaid diagrams
         run: |
