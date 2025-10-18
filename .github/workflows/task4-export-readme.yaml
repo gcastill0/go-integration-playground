@@ -27,7 +27,6 @@ jobs:
             --toc \
             --pdf-engine=xelatex \
             -V geometry:margin=1in \
-            -V mainfont="DejaVu Serif" \
             --output=README.pdf
 
       - name: Upload artifacts
