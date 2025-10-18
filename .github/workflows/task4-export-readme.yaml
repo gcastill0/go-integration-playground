@@ -1,0 +1,39 @@
+name: Export README
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - README.md
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    container: pandoc/extra:latest   # includes Pandoc + LaTeX
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build DOCX
+        run: |
+          pandoc README.md \
+            --from=gfm \
+            --toc \
+            --output=README.docx
+
+      - name: Build PDF
+        run: |
+          pandoc README.md \
+            --from=gfm \
+            --toc \
+            --pdf-engine=xelatex \
+            -V geometry:margin=1in \
+            -V mainfont="DejaVu Serif" \
+            --output=README.pdf
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: readme-exports
+          path: |
+            README.pdf
+            README.docx
