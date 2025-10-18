@@ -178,6 +178,19 @@ An array is an ordered sequence of values. It is delimited by a left bracket (`[
 In this exercise, the data structure encloses all objects in a single array as follows:
 
 ![JSON Structure](tasks/task1-jsonfix/diagrams/diagram-01.svg)
+```mermaid
+---
+config:
+  look: neo
+  layout: elk
+  theme: mc
+---
+flowchart LR
+    A["JSON Array [ ]"] --> I0["[0]"] & I1["[1]"] & I2["[2]"]
+    I0 --> O0["Object { }"]
+    I1 --> O1["Object { }"]
+    I2 --> O2["Object { }"]
+```
 
 While JSON does not define indices, most programming languages interpret arrays with zero-based indexing, so the first element is at index 0, the second at index 1, and so on. Arrays may be empty. Trailing commas are not permitted, and JSON does not support "holes"; every position must contain a value, so an absent value must be represented explicitly, for example with null.
 
@@ -188,6 +201,19 @@ An object is an unordered mapping from string keys to values. It is written betw
 To illustrate, the following is a representation of the object's semantic structure in the original JSON document.
 
 ![Data Structure](tasks/task1-jsonfix/diagrams/diagram-02.svg)
+```mermaid
+---
+config:
+  look: neo
+  layout: elk
+  theme: mc
+---
+flowchart LR
+    U["JSON [ ... ] (array)"] --> id["id"] & name["name"] & username["username"] & email["email"] & phone["phone"] & website["website"] & address["address: { ... }  (object)"] & company["company: { ... }  (object)"]
+    address --> street["street"] & suite["suite"] & city["city"] & zipcode["zipcode"] & geo["geo: { ... }  (object)"]
+    geo --> lat["lat"] & lng["lng"]
+    company --> cname["name"] & catch["catchPhrase"] & bs["bs"]
+```
 
 The order of members has no semantic meaning; you retrieve information by key, as with a dictionary or hash map. Keys should be unique because the standard does not define behavior for duplicates, and trailing commas after the final member are not permitted.
 
