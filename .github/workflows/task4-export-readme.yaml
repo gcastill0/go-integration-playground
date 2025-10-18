@@ -2,37 +2,39 @@ name: Task 4 - Export README
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - tasks/task1-jsonfix/README.md
 
 jobs:
+
+  render-mermaid:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Render .mmd → .svg via container
+        uses: addnab/docker-run-action@v3
+        with:
+          image: ghcr.io/mermaid-js/mermaid-cli:latest
+          options: -v ${{ github.workspace }}:/work -w /work
+          run: |
+            shopt -s nullglob
+            for f in **/*.mmd; do
+              mmdc -i "$f" -o "${f%.mmd}.svg"
+            done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: diagrams
+          path: "**/*.svg"
+
   export:
     runs-on: ubuntu-latest
     container: pandoc/extra:latest   # includes Pandoc + LaTeX
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Render Mermaid diagrams
-        run: |
-            npm install -g @mermaid-js/mermaid-cli
-            mmdc -i diagrams/main.mmd -o diagrams/main.svg
 
-      - name: Prep Mermaid CLI
-        run: |
-          apt-get update
-          apt-get install -y nodejs npm
-          npm install -g @mermaid-js/mermaid-cli
+      - uses: actions/download-artifact@v4
+        with:
+            name: diagrams
+            path: . 
 
-      - name: Render Mermaid → PNG
-        run: |
-          shopt -s nullglob
-          for f in **/*.mmd; do
-            out="${f%.mmd}.png"
-            mmdc -i "$f" -o "$out"
-            echo "Rendered $f -> $out"
-          done
-          
       - name: Build DOCX
         run: |
           pandoc tasks/task1-jsonfix/README.md \
