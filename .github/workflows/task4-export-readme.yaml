@@ -13,6 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install Node.js + npm
+        run: |
+            apt-get update
+            apt-get install -y nodejs npm
+            
       - name: Render Mermaid diagrams
         run: |
             npm install -g @mermaid-js/mermaid-cli
