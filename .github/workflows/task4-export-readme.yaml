@@ -15,14 +15,14 @@ jobs:
 
       - name: Build DOCX
         run: |
-          pandoc README.md \
+          pandoc tasks/task1-jsonfix/README.md \
             --from=gfm \
             --toc \
             --output=README.docx
 
       - name: Build PDF
         run: |
-          pandoc README.md \
+          pandoc tasks/task1-jsonfix/README.md \
             --from=gfm \
             --toc \
             --pdf-engine=xelatex \
